@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Guestbook</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
+  </head>
+  <body>
+    <div>
+      <header>
+        <h1>Welcome to the Site!</h1>
+        <h2>Please Sign the Guestbook.</h2>
+        <br>
+      </header>
+      <a href="/guestbook/sign">Sign the Guestbook</a> 
+      <br>
+    </div>
+    <div>
+      {% if guests %}
+      <p>Guests</p>
+      <br>
+      <ol>
+        {% for guest in guests %}
+        <li>{{guest}}</li>
+        {% endfor %}
+      </ol>
+      {% else %}
+      <p>No guests have signed the guestbook yet!</p>
+      {% endif %}
+    </div>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

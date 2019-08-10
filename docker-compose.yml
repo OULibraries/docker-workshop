@@ -1,0 +1,19 @@
+# Docker Compose file to launch the Python Flask guestbook app.
+
+version: '3'
+
+# Declare a redis and a guestbook service
+
+# For the redis service:
+# Target the Redis Dockerfile.
+# Map port 6379 on the loopback interface (127.0.0.1) to port 6379 in the container.
+# Map a named volume, redis-data, to the /data directory in the Redis container to persist data.
+# For redis persistance, the redis image must have the command "redis-server --appendonly yes". 
+
+# For the guestbook service:
+# Target the guestbook Dockerfile
+# Set the two Redis environment variables.
+# Map port 5000 on the loopback interface (127.0.0.1) to port 5000 in the container.
+# Make sure the guestbook container starts after the Redis container.
+
+# Declare a named volume, redis-data.
