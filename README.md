@@ -119,10 +119,9 @@ running at the moment. If we run `docker ps -a`, we should see that there is
 one exited container that was based on the `hello-world:latest` image.
 
 ```bash
-# Show running containres
+# Show running containers.
 $ docker ps
-docker ps
-CONTAINER ID        IMAGE                        COMMAND                  CREATED             STATUS              PORTS                                 NAMES
+CONTAINER ID        IMAGE                        COMMAND                  CREATED             STATUS                     PORTS                                 NAMES
 
 # Show running and stopped containers.
 $ docker ps -a
@@ -447,7 +446,7 @@ Double check that our container is running via a quick `docker ps` check.
 ```bash
 docker ps
 CONTAINER ID        IMAGE                        COMMAND                  CREATED             STATUS              PORTS                                 NAMES
-e6317b26e1d2        nginx:1.17                   "nginx -g 'daemon of…"   10 seconds ago         Up 9 seconds          127.0.0.1:8888->80/tcp                my-nginx
+e6317b26e1d2        nginx:1.17                   "nginx -g 'daemon of…"   10 seconds ago      Up 9 seconds          127.0.0.1:8888->80/tcp                my-nginx
 ```
 
 Unlike our other containers, we can now see some information in the PORTs column.
