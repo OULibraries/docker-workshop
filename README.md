@@ -353,7 +353,6 @@ binaries are available. Before exiting, try writing some data to a file via
 `echo` (like is shown in the example below).
 
 ```bash
-docker run -it ubuntu:18.04
 root@a6f046d64309:/# hostname -f
 a6f046d64309
 
