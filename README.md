@@ -637,7 +637,7 @@ the public NGINX image. Under `nginx/resources`, you can view the default NGINX
 server configuration file used to serve the Drupal 8 site as well as the NGINX
 environment file.
 
-The MySQL image is built fro mthe Dockerfile in the `mysql` directory. Like with
+The MySQL image is built from the Dockerfile in the `mysql` directory. Like with
 NGINX, this image does not require any additional customization beyond the public
 NGINX image. Under `mysql/resources`, you can see the `init` directory and the
 standard MySQL environment file. The `init` directory will be mounted into the
@@ -669,7 +669,7 @@ vanilla Drupal 8 cluster spun up.
 
 ### 4. Play around with Drupal 8
 
-Once you Drupal 8 cluster has been started, navigate to `http://localhost:8080` in
+Once your Drupal 8 cluster has been started, navigate to `http://localhost:8080` in
 a web browser. You should see the Drupal 8 web interface. Feel free to play around
 with the various tabs and features. Consider publishing a new article or page. Note
 that these changes will persist across restarts of the development cluster due to
