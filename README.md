@@ -815,3 +815,10 @@ then navigate to `http://localhost:5000` and `http://localhost:5000/guestbook` t
 ensure that the application deployed correctly. Also make sure to sign the guestbook
 a few times and restart the application stack to ensure that your guestbook entries
 are persistent.
+
+### 8. Check your solutions.
+
+You can check your completed Dockerfiles and docker-compose.yml against the
+solutions provided in the `solutions` branch of this repo. That branch also
+contains the Docker and docker-compose commands required for each section
+in part 3 inline in the README.
