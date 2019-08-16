@@ -864,7 +864,7 @@ any port collitions. Run the necessary command to bring up the container stack a
 then navigate to `http://localhost:5000` and `http://localhost:5000/guestbook` to
 ensure that the application deployed correctly. Also make sure to sign the guestbook
 a few times and restart the application stack to ensure that your guestbook entries
-are persistant.
+are persistent.
 
 ```bash
 #### SOLUTION ####
