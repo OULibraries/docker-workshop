@@ -722,12 +722,23 @@ Dockerfile for the guestbook.
 Once you have completed the Dockerfile, build an image from the Dockerfile via
 `docker build`. Tag this image as `guestbook:latest`.
 
+```bash
+#### SOLUTION ####
+# Running from the root of the cloned repo.
+$ docker build -t guestbook:latest ./guestbook
+```
+
 ### 2. Run the Guestbook Container
 
 Now that you have a completed guestbook image, run a container based on this
 image via `docker run`. Be sure to run the container in the background and to
 map port 5000 on your loopback interface (127.0.0.1) to port 5000 inside the
 container.
+
+```bash
+#### SOLUTION ####
+$ docker run -d -p 127.0.0.1:5000:5000 guestbook:latest
+```
 
 Once the container is running, navigate to `http://localhost:5000/` in a browser
 on your Docker host. If your container is running correctly, you will see the text
@@ -749,12 +760,18 @@ data store.
 Now we need to build a Redis image so we can save our guestbook entries. Locate
 the [redis skeleton Dockerfile](redis/Dockerfile). Like the guestbook Dockerfile,
 this file contains comments for the steps you will need to take to complete the
-Dockerfile for a Redis image. Utilize the publicly  available Redis official Docker
+Dockerfile for a Redis image. Utilize the publicly available Redis official Docker
 image from Dockerhub for your image. You shouldn't need to add any additional
 directives to your Redis Dockerfile.
 
 Once you have completed the Redis Dockerfile, build an image from the Dockerfile
 via `docker build`. Tag this image as `guestbook_redis:latest`.
+
+```bash
+#### SOLUTION ####
+# Running from the root of the cloned repo.
+$ docker build -t guestbook_redis:latest ./redis
+```
 
 ### 4. Run the Redis Container
 
@@ -762,6 +779,11 @@ Now that you have a completed Redis image, run a container based on this
 image via `docker run`. Be sure to run the container in the background and to
 map port 6379 on your loopback interface (127.0.0.1) to port 6379 inside the
 container.
+
+```bash
+#### SOLUTION ####
+$ docker run -d -p 127.0.0.1:6379:6379 guestbook_redis:latest
+```
 
 ### 5. Connect the Guestbook app to the Redis Container
 
@@ -772,6 +794,34 @@ environment variables. How can you redeploy your guestbook container so that it
 can connnect to the Redis instance successfully? Can you do it without updating
 the Dockerfile? Keep in mind the best practices of container management when
 determining your solution.
+
+```bash
+#### SOLUTION ####
+# The easiest way to inject custom values for REDIS_HOST and REDIS_PORT is
+# by specifying these environment variables when the guestbook container is
+# started. This can be done via the -e option for docker run.
+
+# First we need to get the necessary values for REDIS_HOST
+# Get the ID of the running Redis container.
+$ docker ps -q -f "ancestor=guestbook_redis:latest"
+0a6a2a8c65fc
+
+# Get the private IP address of the running Redis container.
+# This is the IP we will need to use for REDIS_HOST
+$ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' 0a6a2a8c65fc
+172.17.0.3
+
+# We already know that the value of REDIS_PORT is 6379 as that is the port
+# Redis is bound to within the Redis container.
+
+# Stop the current guestbook container.
+$ docker ps -q -f "ancestor=guestbook:latest"
+cb44726d0404
+$ docker stop cb44726d0404
+
+# Start a new guestbook container with the appropriate environment options.
+$ docker run -d -p 127.0.0.1:5000:5000 -e "REDIS_HOST=172.17.0.3" -e "REDIS_PORT=6379" guestbook:latest
+```
 
 Once you have worked through how to connect the guestbook container to the Redis
 container, navigate to `http://localhost:5000/guestbook`. You should no longer
@@ -808,8 +858,35 @@ file in order to deploy the guestbook application stack via docker-compose.
 ### 7. Deploy the guestbook container stack via docker-compose
 
 Once you have completed the docker-compose.yml, you can now spin up the entire
-guestbook container stack with one `docker-compose` command. Run the necessary
-command to bring up the container stack and then navigate to `http://localhost:5000`
-and `http://localhost:5000/guestbook` to ensure that the application deployed
-correctly. Also make sure to sign the guestbook a few times and restart the
-application stack to ensure that your guestbook entries are persistant.
+guestbook container stack with one `docker-compose` command. Make sure you stop
+the guestbook and Redis containers that you started in the previous section to avoid
+any port collitions. Run the necessary command to bring up the container stack and
+then navigate to `http://localhost:5000` and `http://localhost:5000/guestbook` to
+ensure that the application deployed correctly. Also make sure to sign the guestbook
+a few times and restart the application stack to ensure that your guestbook entries
+are persistant.
+
+```bash
+#### SOLUTION ####
+# Stop the guestbook and redis containers from the previous section.
+$ docker ps -q -f "ancestor=guestbook_redis:latest"
+0a6a2a8c65fc
+$ docker stop 0a6a2a8c65fcd
+
+$ docker ps -q -f "ancestor=guestbook:latest"
+27c33fa11884
+$ docker stop 27c33fa11884
+
+# Running from the root of the cloned repo.
+# Start up the guestbook stack.
+$ docker-compose up -d --build
+
+# Restart the guestbook stack.
+$ docker-compose restart
+
+# Stop the guestbook stack.
+$ docker-compose stop
+
+# Stop the guestbook stack, remove the guestbook network and Redis volume.
+$ docker-compose down -v
+```
