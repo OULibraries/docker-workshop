@@ -749,7 +749,7 @@ data store.
 Now we need to build a Redis image so we can save our guestbook entries. Locate
 the [redis skeleton Dockerfile](redis/Dockerfile). Like the guestbook Dockerfile,
 this file contains comments for the steps you will need to take to complete the
-Dockerfile for a Redis image. Utilize the publicly  available Redis official Docker
+Dockerfile for a Redis image. Utilize the publicly available Redis official Docker
 image from Dockerhub for your image. You shouldn't need to add any additional
 directives to your Redis Dockerfile.
 
@@ -808,8 +808,10 @@ file in order to deploy the guestbook application stack via docker-compose.
 ### 7. Deploy the guestbook container stack via docker-compose
 
 Once you have completed the docker-compose.yml, you can now spin up the entire
-guestbook container stack with one `docker-compose` command. Run the necessary
-command to bring up the container stack and then navigate to `http://localhost:5000`
-and `http://localhost:5000/guestbook` to ensure that the application deployed
-correctly. Also make sure to sign the guestbook a few times and restart the
-application stack to ensure that your guestbook entries are persistant.
+guestbook container stack with one `docker-compose` command. Make sure you stop
+the guestbook and Redis containers that you started in the previous section to avoid
+any port collitions. Run the necessary command to bring up the container stack and
+then navigate to `http://localhost:5000` and `http://localhost:5000/guestbook` to
+ensure that the application deployed correctly. Also make sure to sign the guestbook
+a few times and restart the application stack to ensure that your guestbook entries
+are persistent.
